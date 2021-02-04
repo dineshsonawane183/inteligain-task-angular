@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/service/app.service';
-import { CreateEmployeeDialogueComponent } from '../create-task-dialogue/create-employee-dialogue.component';
+import { CreateEmployeeDialogueComponent } from '../create-employee-dialogue/create-employee-dialogue.component';
+import { ViewEmployeeDialogueComponent } from '../view-emp-dialogue/view-emp-dialogue.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,10 +32,6 @@ export class DashboardComponent implements OnInit {
       this.employees = res.data;
     });
   }
-  logout() {
-    this.appService.logout();
-    this.router.navigate(['login']);
-  }
   deleteEmployee() {
     let params = {
       id: this.empIdForDel
@@ -48,8 +45,17 @@ export class DashboardComponent implements OnInit {
   setEmpIdForDel(id) {
     this.empIdForDel = id;
   }
-  editEmployee(emp){
+  viewEmployee(emp){
+    const dialogRef = this.dialog.open(ViewEmployeeDialogueComponent, {
+      width: '60%',
+      height: '88%',
+      data:emp
+    });
 
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.getAllEmployees();
+      console.log('The dialog was closed');
+    });
   }
   employeeAction(action,data = {}) {
     data = {...data,action:action}

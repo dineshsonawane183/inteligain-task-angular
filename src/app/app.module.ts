@@ -12,7 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { CreateEmployeeDialogueComponent } from './component/create-task-dialogue/create-employee-dialogue.component';
+import { CreateEmployeeDialogueComponent } from './component/create-employee-dialogue/create-employee-dialogue.component';
+import { ViewEmployeeDialogueComponent } from './component/view-emp-dialogue/view-emp-dialogue.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CreateEmployeeDialogueComponent } from './component/create-task-dialogu
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    CreateEmployeeDialogueComponent
+    CreateEmployeeDialogueComponent,
+    ViewEmployeeDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { CreateEmployeeDialogueComponent } from './component/create-task-dialogu
     BrowserAnimationsModule
   ],
   entryComponents:[
-    CreateEmployeeDialogueComponent
+    CreateEmployeeDialogueComponent,
+    ViewEmployeeDialogueComponent
   ],
   providers: [
     

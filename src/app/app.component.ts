@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppService } from './service/app.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'task-Angular';
+  constructor(
+    private appService :AppService,
+    private router:Router
+  ){}
+
+  isAuthenticated() {
+    return this.appService.isAuthenticated();
+  }
+  logout() {
+    this.appService.logout();
+    this.router.navigate(['login']);
+  }
 }
