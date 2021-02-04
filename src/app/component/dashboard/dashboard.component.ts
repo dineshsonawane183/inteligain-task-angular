@@ -12,63 +12,19 @@ import { ViewEmployeeDialogueComponent } from '../view-emp-dialogue/view-emp-dia
 })
 export class DashboardComponent implements OnInit {
 
-  sectionTitle: string = "Employee Management";
-  employees = [];
-  empIdForDel = 0;
+  currentPage = 'emp';
   constructor(
     private appService: AppService,
     private router: Router,
-    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.getAllEmployees();
+  }
+  navChange(val) {
+    this.currentPage = val;
   }
   isAuthenticated() {
     return this.appService.isAuthenticated();
   }
-  getAllEmployees() {
-    this.appService.getAllEmployees().subscribe((res: any) => {
-      this.employees = res.data;
-    });
-  }
-  deleteEmployee() {
-    let params = {
-      id: this.empIdForDel
-    }
-    this.appService.deleteEmployee(params).subscribe((res: any) => {
-        if(res.status === 'success'){
-          this.getAllEmployees();
-        }
-    });
-  }
-  setEmpIdForDel(id) {
-    this.empIdForDel = id;
-  }
-  viewEmployee(emp){
-    const dialogRef = this.dialog.open(ViewEmployeeDialogueComponent, {
-      width: '60%',
-      height: '88%',
-      data:emp
-    });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      this.getAllEmployees();
-      console.log('The dialog was closed');
-    });
-  }
-  employeeAction(action,data = {}) {
-    data = {...data,action:action}
-    const dialogRef = this.dialog.open(CreateEmployeeDialogueComponent, {
-      width: '60%',
-      height: '88%',
-      disableClose: true,
-      data:data
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      this.getAllEmployees();
-      console.log('The dialog was closed');
-    });
-  }
 }

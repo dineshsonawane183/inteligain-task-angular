@@ -14,6 +14,8 @@ import { RegisterComponent } from './component/register/register.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { CreateEmployeeDialogueComponent } from './component/create-employee-dialogue/create-employee-dialogue.component';
 import { ViewEmployeeDialogueComponent } from './component/view-emp-dialogue/view-emp-dialogue.component';
+import { EmployeeDashboardComponent } from './component/employee-dashboard/employee-dashboard.component';
+import { UserDashboardComponent } from './component/user-dashboard/user-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ViewEmployeeDialogueComponent } from './component/view-emp-dialogue/vie
     RegisterComponent,
     DashboardComponent,
     CreateEmployeeDialogueComponent,
-    ViewEmployeeDialogueComponent
+    ViewEmployeeDialogueComponent,
+    EmployeeDashboardComponent,
+    UserDashboardComponent
   ],
   imports: [
     BrowserModule,
