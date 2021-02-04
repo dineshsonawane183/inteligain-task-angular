@@ -12,13 +12,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { CreateEmployeeDialogueComponent } from './component/create-task-dialogue/create-employee-dialogue.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateEmployeeDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,9 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule
+  ],
+  entryComponents:[
+    CreateEmployeeDialogueComponent
   ],
   providers: [
     
