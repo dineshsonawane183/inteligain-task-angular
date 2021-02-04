@@ -10,45 +10,51 @@ import { AppService } from 'src/app/service/app.service';
 })
 export class CreateEmployeeDialogueComponent implements OnInit {
 
-
-  statusArray = [
-    { name: "To Do", value: "todo" },
-    { name: "In Progress", value: "in progress" },
-    { name: "Completed", value: "completed" }
-  ];
-  assignedToArray :Array<any> = [];
-
+  typeLable = 'Create';
   constructor(
     public dialogRef: MatDialogRef<CreateEmployeeDialogueComponent>,
     private fb: FormBuilder,
     private api: AppService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-    employeeForm: FormGroup = this.fb.group({
+  employeeForm: FormGroup = this.fb.group({
     name: ["", Validators.required],
     address: [""],
     contact: ["", Validators.required],
-    email: ["", Validators.required],
+    email: ["", [Validators.required, Validators.email]],
     joining_date: ["", Validators.required],
     birth_date: ["", Validators.required],
+    id: [""]
   });
   close(): void {
     this.dialogRef.close();
   }
   ngOnInit(): void {
-    this.getAllUsers();
-  }
-  getAllUsers() {
-    this.api.getUsers().subscribe((res: any) => {
-      if (res && res.data && res.data.length > 0) {
-        this.assignedToArray = res.data;
+    if (this.data && this.data.action) {
+      if (this.data.action === 'edit') {
+        this.employeeForm.patchValue(this.data);
+        this.typeLable = 'Edit';
+      } else if (this.data.action === 'create') {
+        this.typeLable = 'Create';
       }
-    });
+      delete this.data.action;
+    }
   }
+
   onSubmit() {
-    if(this.employeeForm.valid){
-      this.api.saveEmployee(this.employeeForm.value).subscribe((res:any)=>{
-        if(res && res.res.affectedRows == 1){
+    let formData = this.employeeForm.value;
+    if (!this.employeeForm.get('id').value) {
+      delete formData.id;
+      if (this.employeeForm.valid) {
+        this.api.saveEmployee(formData).subscribe((res: any) => {
+          if (res && res.res.affectedRows == 1) {
+            this.close();
+          }
+        });
+      }
+    } else {
+      this.api.updateEmployee(formData).subscribe((res: any) => {
+        if (res && res.res.affectedRows == 1) {
           this.close();
         }
       });

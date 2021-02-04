@@ -28,6 +28,9 @@ export class AppService {
     saveEmployee(params = {}) {
         return this.http.post(environment.api_url + "api/employee", params)
     }
+    updateEmployee(params = {}) {
+        return this.http.patch(environment.api_url + "api/employee", params)
+    }
     deleteEmployee(params = {}) {
         const options = {
             headers: new HttpHeaders({

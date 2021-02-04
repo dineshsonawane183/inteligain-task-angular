@@ -48,11 +48,16 @@ export class DashboardComponent implements OnInit {
   setEmpIdForDel(id) {
     this.empIdForDel = id;
   }
-  createEmployee() {
+  editEmployee(emp){
+
+  }
+  employeeAction(action,data = {}) {
+    data = {...data,action:action}
     const dialogRef = this.dialog.open(CreateEmployeeDialogueComponent, {
       width: '60%',
       height: '88%',
-      disableClose: true
+      disableClose: true,
+      data:data
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
