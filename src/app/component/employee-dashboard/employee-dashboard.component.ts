@@ -30,6 +30,9 @@ export class EmployeeDashboardComponent implements OnInit {
       this.employees = res.data;
     });
   }
+  role(){
+    return this.appService.CURRENT_ROLE;
+  }
   deleteEmployee() {
     let params = {
       id: this.empIdForDel

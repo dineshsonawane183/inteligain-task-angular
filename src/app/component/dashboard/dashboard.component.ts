@@ -13,13 +13,27 @@ import { ViewEmployeeDialogueComponent } from '../view-emp-dialogue/view-emp-dia
 export class DashboardComponent implements OnInit {
 
   currentPage = 'emp';
+  currentRole = "GUEST";
   constructor(
     private appService: AppService,
     private router: Router,
   ) { }
 
   ngOnInit() {
+    this.getRoleInfo();
   }
+  getRoleInfo(){
+    try{
+     let data = JSON.parse(localStorage.getItem('loginData'));
+     let params = {
+       id:data.role_id_fk
+     }
+     this.appService.getRoleFromId(params).subscribe((res:any)=>{
+        this.currentRole = res.data.ROLE_TYPE
+        this.appService.CURRENT_ROLE = res.data.ROLE_TYPE;
+     })
+    }catch(e){}
+   }
   navChange(val) {
     this.currentPage = val;
   }

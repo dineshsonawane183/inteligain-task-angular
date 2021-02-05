@@ -1,3 +1,4 @@
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
@@ -43,12 +44,50 @@ export class AdminDashboardComponent implements OnInit {
     this.appService.getAllRoles().subscribe((res: any) => {
       this.roles = res.data;
       console.log(this.roles)
+      let roleArr= this.roles.map((itm)=>{
+        return {ID:itm.ID,ROLE_TYPE:itm.ROLE_TYPE,parent:itm.parent}
+      })
+      console.log(roleArr);
+     // this.buildHierarchy(roleArr);
     });
   }
+/*    buildHierarchy(arry) {
+
+    var roots = [], children = {};
+
+    // find the top level nodes and hash the children based on parent
+    for (var i = 0, len = arry.length; i < len; ++i) {
+        var item = arry[i],
+            p = item.parent,
+            target = p==0 ? roots : (children[p] || (children[p] = []));
+
+        target.push({ value: item });
+    }
+
+    console.log(target,roots,children);
+    // function to recursively build the tree
+    var findChildren = function (parent) {
+        if (children[parent.value.ID]) {
+            parent.children = children[parent.value.ID];
+            for (var i = 0, len = parent.children.length; i < len; ++i) {
+                findChildren(parent.children[i]);
+            }
+        }
+    };
+
+    // enumerate through to handle the case where there are multiple roots
+    for (var i = 0, len:any = roots.length; i < len; ++i) {
+        findChildren(roots[i]);
+    }
+
+   console.log(roots);
+} */
+
+
+
   getAllPermissions() {
     this.appService.getAllPermission().subscribe((res: any) => {
       this.permissions = res.data;
-      console.log(this.permissions)
     });
   }
   onSubmit(formDirective: FormGroupDirective) {

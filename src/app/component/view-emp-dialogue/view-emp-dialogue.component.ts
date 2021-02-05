@@ -24,6 +24,9 @@ export class ViewEmployeeDialogueComponent implements OnInit {
   ngOnInit(): void {
    
   }
+  role(){
+    return this.api.CURRENT_ROLE;
+  }
   editEmployee(){
     let data = {...this.data,action:"edit"}
     const dialogRef = this.dialog.open(CreateEmployeeDialogueComponent, {

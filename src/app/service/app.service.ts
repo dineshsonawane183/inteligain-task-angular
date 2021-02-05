@@ -11,6 +11,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AppService {
 
     DEFAULT_ROLE = 2;
+    CURRENT_ROLE = "";
+    loggedInData = {};
     constructor(
         private http: HttpClient,
         public jwtHelper: JwtHelperService
@@ -20,6 +22,7 @@ export class AppService {
       }
     public logout() {
         localStorage.removeItem('token');
+        localStorage.removeItem('loginData');
         const body = { message: "user logged out" };
         return body;
     }
@@ -38,6 +41,9 @@ export class AppService {
     }
     getAllRoles(params = {}){
         return this.http.get(environment.api_url + "api/role", params);
+    }
+    getRoleFromId(params){
+        return this.http.get(environment.api_url + "api/role/id?id="+params.id);
     }
     getAllPermission(params = {}){
         return this.http.get(environment.api_url + "api/role/permission", params);

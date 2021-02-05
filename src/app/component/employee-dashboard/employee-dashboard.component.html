@@ -3,7 +3,7 @@
     <main class="col-md-11 nopadding">
       <div class="mt-4">
         <h3 class="d-inline">{{sectionTitle}}</h3>
-        <button class="btn btn-primary float-right mb-2 d-inline" (click)="employeeAction('create')"> Create Employee</button>
+        <button *ngIf ="role() === 'ADMIN'" class="btn btn-primary float-right mb-2 d-inline" (click)="employeeAction('create')"> Create Employee</button>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -36,7 +36,7 @@
                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                 </svg>
               </button>
-                <button type="button" class="btn btn-primary d-inline ml-1 mt-1" (click)="employeeAction('edit',emp)">
+                <button  *ngIf ="role() === 'ADMIN'" type="button" class="btn btn-primary d-inline ml-1 mt-1" (click)="employeeAction('edit',emp)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-pencil-fill" viewBox="0 0 16 16">
                     <path
@@ -44,7 +44,7 @@
                     </path>
                   </svg>
                 </button>
-                <button type="button" class="btn btn-danger d-inline ml-1 mt-1"  data-toggle="modal" (click)="setEmpIdForDel(emp.id)" data-target="#empModalCenter">
+                <button  *ngIf ="role() === 'ADMIN'" type="button" class="btn btn-danger d-inline ml-1 mt-1"  data-toggle="modal" (click)="setEmpIdForDel(emp.id)" data-target="#empModalCenter">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
                   viewBox="0 0 16 16">
                   <path

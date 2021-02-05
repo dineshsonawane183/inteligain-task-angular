@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
   onSubmit() {
     let params = {
       username: this.loginForm.get('username').value,
@@ -34,6 +33,8 @@ export class LoginComponent implements OnInit {
       this.loginInvalid = true;
       if (res.status === "success") {
         localStorage.setItem("token", res.token);
+        this.api.loggedInData = JSON.stringify(res.data);
+        localStorage.setItem('loginData',JSON.stringify(res.data))
         this.loginInvalid = false;
         this.router.navigate(["/dashboard"]);
       } else {
