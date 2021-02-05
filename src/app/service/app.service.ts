@@ -33,6 +33,9 @@ export class AppService {
     updateEmployee(params = {}) {
         return this.http.patch(environment.api_url + "api/employee", params)
     }
+    updateUserDetails(params = {}) {
+        return this.http.patch(environment.api_url + "api/user", params)
+    }
     getAllRoles(params = {}){
         return this.http.get(environment.api_url + "api/role", params);
     }
@@ -53,6 +56,15 @@ export class AppService {
             body: params,
         };
         return this.http.delete(environment.api_url + "api/employee/delete", options)
+    }
+    deleteUser(params = {}){
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+            body: params,
+        };
+        return this.http.delete(environment.api_url + "api/user/delete", options)
     }
     getAllEmployees(params = {}) {
         return this.http.get(environment.api_url + "api/employee", params)
