@@ -15,7 +15,9 @@ export class AppService {
         private http: HttpClient,
         public jwtHelper: JwtHelperService
     ) { }
-
+    public getToken(): string {
+        return localStorage.getItem('token');
+      }
     public logout() {
         localStorage.removeItem('token');
         const body = { message: "user logged out" };
@@ -31,6 +33,18 @@ export class AppService {
     updateEmployee(params = {}) {
         return this.http.patch(environment.api_url + "api/employee", params)
     }
+    getAllRoles(params = {}){
+        return this.http.get(environment.api_url + "api/role", params);
+    }
+    getAllPermission(params = {}){
+        return this.http.get(environment.api_url + "api/role/permission", params);
+    }
+    createRole(params = {}){
+        return this.http.post(environment.api_url + "api/role", params)     
+    }
+    createPermission(params = {}){
+        return this.http.post(environment.api_url + "api/role/permission", params)
+    }
     deleteEmployee(params = {}) {
         const options = {
             headers: new HttpHeaders({
@@ -43,7 +57,7 @@ export class AppService {
     getAllEmployees(params = {}) {
         return this.http.get(environment.api_url + "api/employee", params)
     }
-    getUsers(params = {}) {
+    getAllUsers(params = {}) {
         return this.http.get(environment.api_url + "api/user", params);
     }
     login(params = {}) {
