@@ -1,7 +1,7 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
+import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTreeNestedDataSource } from '@angular/material';
 import { AppService } from 'src/app/service/app.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
@@ -14,15 +14,19 @@ export class AdminDashboardComponent implements OnInit {
 
   sectionTitle: string = "Admin Configuration";
   roles = [];
+  dataSource;
   permissions = [];
   currentSection = "role";
   constructor(
     public dialog: MatDialog,
     private appService: AppService,
     private fb: FormBuilder,
-    private toastr : NotificationService
+    private toastr: NotificationService
   ) { }
 
+  treeControl = new NestedTreeControl<RoleNode>(node => node.children);
+
+  hasChild = (_: number, node: RoleNode) => !!node.children && node.children.length > 0;
 
   roleForm: FormGroup = this.fb.group({
     role_type: ["", Validators.required],
@@ -30,7 +34,7 @@ export class AdminDashboardComponent implements OnInit {
     parent: ["", Validators.required],
     permission: ["", Validators.required],
   });
-  permissionForm : FormGroup = this.fb.group({
+  permissionForm: FormGroup = this.fb.group({
     permission_code: ["", Validators.required],
     permission_desc: ["", Validators.required],
   });
@@ -43,45 +47,40 @@ export class AdminDashboardComponent implements OnInit {
   getAllRoles() {
     this.appService.getAllRoles().subscribe((res: any) => {
       this.roles = res.data;
-      console.log(this.roles)
-      let roleArr= this.roles.map((itm)=>{
-        return {ID:itm.ID,ROLE_TYPE:itm.ROLE_TYPE,parent:itm.parent}
+      let roleArr = this.roles.map((itm) => {
+        return { ID: itm.ID, ROLE_TYPE: itm.ROLE_TYPE, parent: itm.parent }
       })
-      console.log(roleArr);
-     // this.buildHierarchy(roleArr);
+      this.buildHierarchy(roleArr);
     });
   }
-/*    buildHierarchy(arry) {
+
+
+  buildHierarchy(arry) {
 
     var roots = [], children = {};
 
-    // find the top level nodes and hash the children based on parent
     for (var i = 0, len = arry.length; i < len; ++i) {
-        var item = arry[i],
-            p = item.parent,
-            target = p==0 ? roots : (children[p] || (children[p] = []));
-
-        target.push({ value: item });
+      var item = arry[i],
+        p = item.parent,
+        target = p == 0 ? roots : (children[p] || (children[p] = []));
+      target.push({ value: item });
     }
 
-    console.log(target,roots,children);
-    // function to recursively build the tree
     var findChildren = function (parent) {
-        if (children[parent.value.ID]) {
-            parent.children = children[parent.value.ID];
-            for (var i = 0, len = parent.children.length; i < len; ++i) {
-                findChildren(parent.children[i]);
-            }
+      if (children[parent.value.ID]) {
+        parent.children = children[parent.value.ID];
+        for (var i = 0, len = parent.children.length; i < len; ++i) {
+          findChildren(parent.children[i]);
         }
+      }
     };
 
-    // enumerate through to handle the case where there are multiple roots
-    for (var i = 0, len:any = roots.length; i < len; ++i) {
-        findChildren(roots[i]);
+    for (var i = 0, len: any = roots.length; i < len; ++i) {
+      findChildren(roots[i]);
     }
-
-   console.log(roots);
-} */
+    this.dataSource = roots;
+    console.log(roots);
+  }
 
 
 
@@ -95,25 +94,29 @@ export class AdminDashboardComponent implements OnInit {
       this.appService.createRole(this.roleForm.value).subscribe((res: any) => {
         this.roleForm.reset();
         formDirective.resetForm();
-        this.toastr.showSuccess("Role saved successfully","Success")
+        this.toastr.showSuccess("Role saved successfully", "Success")
         this.getAllRoles();
         this.getAllPermissions();
       });
     }
   }
-  radioChange(val){
+  radioChange(val) {
     this.currentSection = val;
   }
-  onPermissionSubmit(formDirective:FormGroupDirective){
+  onPermissionSubmit(formDirective: FormGroupDirective) {
     if (this.permissionForm.valid) {
       this.appService.createPermission(this.permissionForm.value).subscribe((res: any) => {
         this.permissionForm.reset();
         formDirective.resetForm();
-        this.toastr.showSuccess("Permission saved successfully","Success")
+        this.toastr.showSuccess("Permission saved successfully", "Success")
         this.getAllRoles();
         this.getAllPermissions();
       });
     }
   }
-
+ 
+}
+interface RoleNode {
+  value: object;
+  children?: RoleNode[];
 }
