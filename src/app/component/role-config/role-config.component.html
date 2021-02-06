@@ -47,9 +47,9 @@
     </div>
   
   </main>
-  <div class="col-md-4 nopadding">
+  <div class="mt-4 col-md-4 nopadding">
     <h3 class="d-inline">Tree View</h3>
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree" #tree>
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
         <li class="mat-tree-node">
@@ -70,7 +70,7 @@
             </button>
             {{node.value.ROLE_TYPE}}
           </div>
-          <ul [class.example-tree-invisible]="!treeControl.isExpanded(node.value.ROLE_TYPE)">
+          <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
             <ng-container matTreeNodeOutlet></ng-container>
           </ul>
         </li>

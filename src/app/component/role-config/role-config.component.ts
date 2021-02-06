@@ -120,6 +120,7 @@ export class AdminDashboardComponent implements OnInit {
       this.changedRoleData();
     });
   }
+
 }
 interface RoleNode {
   value: object;
