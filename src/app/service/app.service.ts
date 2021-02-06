@@ -51,6 +51,9 @@ export class AppService {
     createRole(params = {}){
         return this.http.post(environment.api_url + "api/role", params)     
     }
+    updateRole(params = {}) {
+        return this.http.patch(environment.api_url + "api/role", params)
+    }
     createPermission(params = {}){
         return this.http.post(environment.api_url + "api/role/permission", params)
     }
@@ -62,6 +65,15 @@ export class AppService {
             body: params,
         };
         return this.http.delete(environment.api_url + "api/employee/delete", options)
+    }
+    deleteRole(params = {}) {
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+            body: params,
+        };
+        return this.http.delete(environment.api_url + "api/role/delete", options)
     }
     deleteUser(params = {}){
         const options = {

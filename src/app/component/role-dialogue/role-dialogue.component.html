@@ -1,0 +1,59 @@
+<div class="container text-center">
+            <h4>{{typeLable}} Role</h4>
+            <form [formGroup]="roleForm" (ngSubmit)="onSubmit(formDirective)" #formDirective="ngForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="full-width-input mt-2">
+                            <input matInput placeholder="Role" formControlName="role_type" >
+                            <mat-error>
+                                Please provide valid role type
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field class="full-width-input mt-2">
+                        <input matInput placeholder="Role Description" formControlName="role_description" >
+                        <mat-error>
+                            Please provide valid role description
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <mat-form-field class="full-width-input mt-2">
+                          <mat-label>Immediate Superior</mat-label>
+                          <mat-select matNativeControl formControlName="parent">
+                              <mat-option *ngFor="let item of roles" value="{{item?.ID}}">{{item?.ROLE_TYPE}}
+                              </mat-option>
+                          </mat-select>
+                          <mat-error>
+                              Please select value
+                          </mat-error>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                    <mat-form-field class="full-width-input mt-2">
+                        <mat-label>Permissions</mat-label>
+                        <mat-select matNativeControl formControlName="permission">
+                            <mat-option *ngFor="let item of permissions" value="{{item?.ID}}">{{item?.PERMISSION_CODE}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            Please select value
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+                <div class="row text-center mb-3">
+                    <div class="col-md-12">
+                        <div id="btnClose"  class="mt-3 d-inline mr-2 btn btn-outline-secondary" mat-raised-button (click)="close()">Close</div>
+                        <button id="btnSubmit" type="submit" class="mt-3 d-inline" mat-raised-button color="primary">{{typeLable}} Role</button>
+                </div>
+                </div>
+            </form>
+</div>

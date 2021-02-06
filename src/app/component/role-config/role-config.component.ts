@@ -1,9 +1,10 @@
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog, MatTreeNestedDataSource } from '@angular/material';
 import { AppService } from 'src/app/service/app.service';
 import { NotificationService } from 'src/app/service/notification.service';
+import { RoleDialogueComponent } from '../role-dialogue/role-dialogue.component';
 
 @Component({
   selector: 'app-role-config',
@@ -28,12 +29,7 @@ export class AdminDashboardComponent implements OnInit {
 
   hasChild = (_: number, node: RoleNode) => !!node.children && node.children.length > 0;
 
-  roleForm: FormGroup = this.fb.group({
-    role_type: ["", Validators.required],
-    role_description: ["", Validators.required],
-    parent: ["", Validators.required],
-    permission: ["", Validators.required],
-  });
+  
   permissionForm: FormGroup = this.fb.group({
     permission_code: ["", Validators.required],
     permission_desc: ["", Validators.required],
@@ -83,23 +79,16 @@ export class AdminDashboardComponent implements OnInit {
   }
 
 
-
+  changedRoleData(){
+    this.getAllRoles();
+    this.getAllPermissions();
+  }
   getAllPermissions() {
     this.appService.getAllPermission().subscribe((res: any) => {
       this.permissions = res.data;
     });
   }
-  onSubmit(formDirective: FormGroupDirective) {
-    if (this.roleForm.valid) {
-      this.appService.createRole(this.roleForm.value).subscribe((res: any) => {
-        this.roleForm.reset();
-        formDirective.resetForm();
-        this.toastr.showSuccess("Role saved successfully", "Success")
-        this.getAllRoles();
-        this.getAllPermissions();
-      });
-    }
-  }
+  
   radioChange(val) {
     this.currentSection = val;
   }
@@ -114,7 +103,23 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
   }
- 
+  createRolelicked(){
+    const dialogRef = this.dialog.open(RoleDialogueComponent, {
+      width: '60%',
+      height: '88%',
+      disableClose: true,
+      data :{
+        roles : this.roles,
+        permissions:this.permissions,
+        type:"create"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed');
+      this.changedRoleData();
+    });
+  }
 }
 interface RoleNode {
   value: object;

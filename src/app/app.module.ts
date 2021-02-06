@@ -21,6 +21,8 @@ import { NotificationService } from './service/notification.service';
 import { ToastrModule } from 'ngx-toastr';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { EditUserDialogueComponent } from './component/edit-user-dialogue/edit-user-dialogue.component';
+import { RoleDashboardComponent } from './component/role-dashboard/role-dashboard.component';
+import { RoleDialogueComponent } from './component/role-dialogue/role-dialogue.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { EditUserDialogueComponent } from './component/edit-user-dialogue/edit-u
     EmployeeDashboardComponent,
     UserDashboardComponent,
     AdminDashboardComponent,
-    EditUserDialogueComponent
+    EditUserDialogueComponent,
+    RoleDashboardComponent,
+    RoleDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,8 @@ import { EditUserDialogueComponent } from './component/edit-user-dialogue/edit-u
   entryComponents:[
     CreateEmployeeDialogueComponent,
     ViewEmployeeDialogueComponent,
-    EditUserDialogueComponent
+    EditUserDialogueComponent,
+    RoleDialogueComponent
   ],
   providers: [
     
