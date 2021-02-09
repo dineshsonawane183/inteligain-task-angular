@@ -30,8 +30,12 @@ export class EmployeeDashboardComponent implements OnInit {
       this.employees = res.data;
     });
   }
-  role(){
-    return this.appService.CURRENT_ROLE;
+  role(from){
+    if(this.appService.USERS_PERMISSIONS.indexOf(from) !== -1){
+      return "hasAccess";
+    }else{
+      return "noAccess";
+    }
   }
   deleteEmployee() {
     let params = {

@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild,EventEmitter  } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { AppService } from 'src/app/service/app.service';
-import { CreateEmployeeDialogueComponent } from '../create-employee-dialogue/create-employee-dialogue.component';
 import { EditUserDialogueComponent } from '../edit-user-dialogue/edit-user-dialogue.component';
-import { ViewEmployeeDialogueComponent } from '../view-emp-dialogue/view-emp-dialogue.component';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -16,6 +13,8 @@ export class UserDashboardComponent implements OnInit {
   sectionTitle: string = "User Dashboard";
   users = [];
   usrIdForDel = 0;
+  @Output()
+  userDetailsChanged  = new EventEmitter<any>();
   constructor(
     public dialog: MatDialog,
     private appService: AppService
@@ -40,8 +39,16 @@ export class UserDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       this.getAllUsers();
+      this.userDetailsChanged.emit();
       console.log('The dialog was closed');
     });
+  }
+  role(from){
+    if(this.appService.USERS_PERMISSIONS.indexOf(from) !== -1){
+      return "hasAccess";
+    }else{
+      return "noAccess";
+    }
   }
   setUsrIdForDel(id){
     this.usrIdForDel = id;

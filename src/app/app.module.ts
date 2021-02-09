@@ -23,6 +23,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { EditUserDialogueComponent } from './component/edit-user-dialogue/edit-user-dialogue.component';
 import { RoleDashboardComponent } from './component/role-dashboard/role-dashboard.component';
 import { RoleDialogueComponent } from './component/role-dialogue/role-dialogue.component';
+import { PermissionDashboardComponent } from './component/permission-dashboard/permission-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RoleDialogueComponent } from './component/role-dialogue/role-dialogue.c
     AdminDashboardComponent,
     EditUserDialogueComponent,
     RoleDashboardComponent,
-    RoleDialogueComponent
+    RoleDialogueComponent,
+    PermissionDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,7 @@ import { RoleDialogueComponent } from './component/role-dialogue/role-dialogue.c
     CreateEmployeeDialogueComponent,
     ViewEmployeeDialogueComponent,
     EditUserDialogueComponent,
-    RoleDialogueComponent
+    RoleDialogueComponent,
   ],
   providers: [
     

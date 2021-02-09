@@ -24,8 +24,12 @@ export class ViewEmployeeDialogueComponent implements OnInit {
   ngOnInit(): void {
    
   }
-  role(){
-    return this.api.CURRENT_ROLE;
+  role(from){
+    if(this.api.USERS_PERMISSIONS.indexOf(from) !== -1){
+      return "hasAccess";
+    }else{
+      return "noAccess";
+    }
   }
   editEmployee(){
     let data = {...this.data,action:"edit"}

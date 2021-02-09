@@ -12,6 +12,7 @@ export class AppService {
 
     DEFAULT_ROLE = 2;
     CURRENT_ROLE = "";
+    USERS_PERMISSIONS = [];
     loggedInData = {};
     constructor(
         private http: HttpClient,

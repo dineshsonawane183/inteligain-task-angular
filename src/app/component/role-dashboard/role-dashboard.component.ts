@@ -44,6 +44,13 @@ export class RoleDashboardComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+  roleAccess(from){
+    if(this.appService.USERS_PERMISSIONS.indexOf(from) !== -1){
+      return "hasAccess";
+    }else{
+      return "noAccess";
+    }
+  }
   deleteRole() {
     let params = {
       id: this.delRoleId

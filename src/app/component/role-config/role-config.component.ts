@@ -92,15 +92,11 @@ export class AdminDashboardComponent implements OnInit {
   radioChange(val) {
     this.currentSection = val;
   }
-  onPermissionSubmit(formDirective: FormGroupDirective) {
-    if (this.permissionForm.valid) {
-      this.appService.createPermission(this.permissionForm.value).subscribe((res: any) => {
-        this.permissionForm.reset();
-        formDirective.resetForm();
-        this.toastr.showSuccess("Permission saved successfully", "Success")
-        this.getAllRoles();
-        this.getAllPermissions();
-      });
+  role(from){
+    if(this.appService.USERS_PERMISSIONS.indexOf(from) !== -1){
+      return "hasAccess";
+    }else{
+      return "noAccess";
     }
   }
   createRolelicked(){

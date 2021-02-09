@@ -13,6 +13,7 @@ export class EditUserDialogueComponent implements OnInit {
 
   typeLable = 'Create';
   roles = [];
+  permissions = [];
   constructor(
     public dialogRef: MatDialogRef<EditUserDialogueComponent>,
     private fb: FormBuilder,
@@ -25,6 +26,7 @@ export class EditUserDialogueComponent implements OnInit {
     last_name: ["", Validators.required],
     role_type: ["", Validators.required],
     user_name: ["", [Validators.required]],
+    permission_id: ["", [Validators.required]],
   });
   close(): void {
     this.dialogRef.close();
@@ -33,6 +35,7 @@ export class EditUserDialogueComponent implements OnInit {
     console.log(this.data);
     this.userForm.patchValue(this.data);
     this.getAllRoles();
+    this.getAllPermissions();
 
   }
   getAllRoles() {
@@ -41,6 +44,13 @@ export class EditUserDialogueComponent implements OnInit {
       this.userForm.get('role_type').patchValue(this.data.role_type);
     });
   }
+  getAllPermissions() {
+    this.api.getAllPermission().subscribe((res: any) => {
+      this.permissions = res.data;
+      console.log(this.permissions);
+    });
+  }
+  
   onSubmit() {
     if (this.userForm.valid) {
       let itm = this.roles.filter((item)=>{

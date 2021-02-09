@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatIconModule, MatRadioModule, MatTreeModule } from '@angular/material';
+import { MatCheckboxModule, MatIconModule, MatRadioModule, MatTreeModule } from '@angular/material';
 
 @NgModule({
   exports: [
@@ -19,7 +19,8 @@ import { MatIconModule, MatRadioModule, MatTreeModule } from '@angular/material'
     MatNativeDateModule,
     MatRadioModule,
     MatTreeModule,
-    MatIconModule
+    MatIconModule,
+    MatCheckboxModule
   ],
 })
 export class MaterialModule { }

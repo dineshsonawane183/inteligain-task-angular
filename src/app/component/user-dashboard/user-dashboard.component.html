@@ -24,7 +24,7 @@
             <td>{{usr.role_type}}</td>
             <td>{{usr.permission_code}}</td>
             <td>
-              <button type="button" class="btn btn-primary d-inline ml-1 mt-1" (click)="editUser(usr)">
+              <button type="button" *ngIf ="role('Edit Users') === 'hasAccess'"  class="btn btn-primary d-inline ml-1 mt-1" (click)="editUser(usr)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-pencil-fill" viewBox="0 0 16 16">
                   <path
@@ -32,7 +32,7 @@
                   </path>
                 </svg>
               </button>
-              <button type="button" class="btn btn-danger d-inline ml-1 mt-1"  data-toggle="modal" (click)="setUsrIdForDel(usr.id)" data-target="#empModalCenter">
+              <button type="button" *ngIf ="role('Delete Users') === 'hasAccess'"  class="btn btn-danger d-inline ml-1 mt-1"  data-toggle="modal" (click)="setUsrIdForDel(usr.id)" data-target="#empModalCenter">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
                 viewBox="0 0 16 16">
                 <path

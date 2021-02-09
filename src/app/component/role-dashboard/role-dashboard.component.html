@@ -19,7 +19,7 @@
             <td>{{role.ROLE_DESCRIPTION}}</td>
             <td>{{role.parent}}</td>
             <td>
-              <button type="button" class="btn btn-primary d-inline ml-1 mt-1" (click)="editUser(role)">
+              <button type="button" *ngIf ="roleAccess('Edit Role') === 'hasAccess'" class="btn btn-primary d-inline ml-1 mt-1" (click)="editUser(role)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-pencil-fill" viewBox="0 0 16 16">
                   <path
@@ -27,7 +27,7 @@
                   </path>
                 </svg>
               </button>
-              <button type="button" class="btn btn-danger d-inline ml-1 mt-1"  data-toggle="modal" (click)="setdelRoleId(role.ID)" data-target="#empModalCenter">
+              <button type="button" *ngIf ="roleAccess('Delete Role') === 'hasAccess'" class="btn btn-danger d-inline ml-1 mt-1"  data-toggle="modal" (click)="setdelRoleId(role.ID)" data-target="#empModalCenter">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
                 viewBox="0 0 16 16">
                 <path
