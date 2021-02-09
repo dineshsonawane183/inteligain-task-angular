@@ -11,6 +11,7 @@ import { AppService } from 'src/app/service/app.service';
 export class CreateEmployeeDialogueComponent implements OnInit {
 
   typeLable = 'Create';
+  roles =[];
   constructor(
     public dialogRef: MatDialogRef<CreateEmployeeDialogueComponent>,
     private fb: FormBuilder,
@@ -24,12 +25,14 @@ export class CreateEmployeeDialogueComponent implements OnInit {
     email: ["", [Validators.required, Validators.email]],
     joining_date: ["", Validators.required],
     birth_date: ["", Validators.required],
+    designation: ["", Validators.required],
     id: [""]
   });
   close(): void {
     this.dialogRef.close();
   }
   ngOnInit(): void {
+    this.getAllRoles();
     if (this.data && this.data.action) {
       if (this.data.action === 'edit') {
         this.employeeForm.patchValue(this.data);
@@ -39,6 +42,11 @@ export class CreateEmployeeDialogueComponent implements OnInit {
       }
       delete this.data.action;
     }
+  }
+  getAllRoles() {
+    this.api.getAllRoles().subscribe((res: any) => {
+      this.roles = res.data;
+    });
   }
 
   onSubmit() {

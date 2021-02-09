@@ -15,3 +15,9 @@
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
   }
+  .text {
+    display: block;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

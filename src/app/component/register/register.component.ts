@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/service/app.service';
+import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private api: AppService
+    private api: AppService,
+    private toastr:NotificationService
   ) { }
 
   registerForm: FormGroup = this.fb.group({
@@ -38,6 +40,7 @@ export class RegisterComponent implements OnInit {
       }
       this.api.register(params).subscribe((res: any) => {
         if (res.status === "success") {
+          this.toastr.showSuccess("Register Successfully!","Success");
           this.router.navigate(["/login"]);
         }
       });

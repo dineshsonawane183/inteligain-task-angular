@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from './service/app.service';
+import { NotificationService } from './service/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private router: Router
+    private router: Router,
+    private toastr:NotificationService
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,7 @@ export class AppComponent implements OnInit {
   }
   logout() {
     this.appService.logout();
+    this.toastr.showSuccess("Sign Out successfully!","success");
     this.router.navigate(['login']);
   }
 }

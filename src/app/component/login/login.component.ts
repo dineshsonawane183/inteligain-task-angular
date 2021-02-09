@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/service/app.service';
+import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private api: AppService
+    private api: AppService,
+    private toastr : NotificationService
   ) { }
 
   loginForm: FormGroup = this.fb.group({
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
         this.api.loggedInData = JSON.stringify(res.data);
         localStorage.setItem('loginData',JSON.stringify(res.data))
         this.loginInvalid = false;
+        this.toastr.showSuccess("Login Successfully!","Success");
         this.router.navigate(["/dashboard"]);
       } else {
         setTimeout(() => {

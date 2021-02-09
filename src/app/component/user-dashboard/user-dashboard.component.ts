@@ -13,7 +13,7 @@ import { ViewEmployeeDialogueComponent } from '../view-emp-dialogue/view-emp-dia
 })
 export class UserDashboardComponent implements OnInit {
 
-  sectionTitle: string = "User Management";
+  sectionTitle: string = "User Dashboard";
   users = [];
   usrIdForDel = 0;
   constructor(
