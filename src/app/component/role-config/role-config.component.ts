@@ -1,9 +1,10 @@
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatDialog, MatTreeNestedDataSource } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppService } from 'src/app/service/app.service';
 import { NotificationService } from 'src/app/service/notification.service';
+import { PermissionDashboardComponent } from '../permission-dashboard/permission-dashboard.component';
 import { RoleDialogueComponent } from '../role-dialogue/role-dialogue.component';
 
 @Component({
@@ -22,7 +23,7 @@ export class AdminDashboardComponent implements OnInit {
     public dialog: MatDialog,
     private appService: AppService,
     private fb: FormBuilder,
-    private toastr: NotificationService
+    private toastr: NotificationService,
   ) { }
 
   treeControl = new NestedTreeControl<RoleNode>(node => node.children);
@@ -91,6 +92,21 @@ export class AdminDashboardComponent implements OnInit {
   
   radioChange(val) {
     this.currentSection = val;
+  }
+  
+  createPermissionClicked(){
+    const dialogRef = this.dialog.open(PermissionDashboardComponent, {
+      width: '60%',
+      height: '88%',
+      disableClose: true,
+      data :{
+        type:"create"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed');
+    });
   }
   role(from){
     if(this.appService.USERS_PERMISSIONS.indexOf(from) !== -1){

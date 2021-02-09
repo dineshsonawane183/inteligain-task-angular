@@ -23,8 +23,10 @@ export class PermissionDashboardComponent implements OnInit {
   }
   constructor(
     private fb: FormBuilder,
+    public dialogRef: MatDialogRef<PermissionDashboardComponent>,
     private appService: AppService,
-    private toastr: NotificationService
+    private toastr: NotificationService,
+    @Inject(MAT_DIALOG_DATA) public dialogueData: any
   ) {
     this.initialize();
     this.treeFlattener = new MatTreeFlattener(
@@ -172,9 +174,14 @@ export class PermissionDashboardComponent implements OnInit {
       this.appService.createPermission(params).subscribe((res: any) => {
         this.permissionForm.reset();
         formDirective.resetForm();
+        this.close();
         this.toastr.showSuccess("Permission saved successfully", "Success")
       });
     }
+  }
+
+  close(){
+    this.dialogRef.close();
   }
 }
 export class TodoItemNode {
@@ -204,7 +211,9 @@ const TREE_DATA = {
     "role_view": "View Role",
     "role_edit": "Edit Role",
     "role_create": "Create Role",
-    "role_delete": "Delete Role"
+    "role_delete": "Delete Role",
+    "permission_delete": "Delete Permission",
+    "permission_create": "Create Permission",
   },
 };
 

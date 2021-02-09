@@ -9,7 +9,12 @@
       <mat-radio-button value="2" (change)="radioChange('permission')"> Permissions</mat-radio-button>
     </mat-radio-group>
    <div *ngIf="currentSection === 'permission'">
-     <app-permission-dashboard></app-permission-dashboard>
+    <div class="row"  *ngIf ="role('Create Permission') === 'hasAccess'" >
+      <div class="col-md-12 float-right mb-2" >
+        <button class="btn btn-primary float-right" (click)="createPermissionClicked()">Create Permission</button>
+      </div>
+    </div>
+     <app-permission-dashboard-list [roles] = "roles" [permissions]="permissions" (changedPermissionData)="changedRoleData()"></app-permission-dashboard-list>
    </div>
    <div *ngIf="currentSection === 'role'">
      <div class="row">

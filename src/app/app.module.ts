@@ -24,6 +24,7 @@ import { EditUserDialogueComponent } from './component/edit-user-dialogue/edit-u
 import { RoleDashboardComponent } from './component/role-dashboard/role-dashboard.component';
 import { RoleDialogueComponent } from './component/role-dialogue/role-dialogue.component';
 import { PermissionDashboardComponent } from './component/permission-dashboard/permission-dashboard.component';
+import { PermissionDashboardListComponent } from './component/permission-dashboard-list/permission-dashboard-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PermissionDashboardComponent } from './component/permission-dashboard/p
     EditUserDialogueComponent,
     RoleDashboardComponent,
     RoleDialogueComponent,
-    PermissionDashboardComponent
+    PermissionDashboardComponent,
+    PermissionDashboardListComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,7 @@ import { PermissionDashboardComponent } from './component/permission-dashboard/p
     ViewEmployeeDialogueComponent,
     EditUserDialogueComponent,
     RoleDialogueComponent,
+    PermissionDashboardComponent,
   ],
   providers: [
     

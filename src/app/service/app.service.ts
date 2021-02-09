@@ -67,6 +67,15 @@ export class AppService {
         };
         return this.http.delete(environment.api_url + "api/employee/delete", options)
     }
+    deletePermission(params = {}) {
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+            body: params,
+        };
+        return this.http.delete(environment.api_url + "api/role/permission/delete", options)
+    }
     deleteRole(params = {}) {
         const options = {
             headers: new HttpHeaders({
