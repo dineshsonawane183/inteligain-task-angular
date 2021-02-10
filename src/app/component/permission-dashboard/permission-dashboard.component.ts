@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Injectable } from '@angular/core';
+import { Component, OnInit, Inject, Injectable, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MatTreeFlatDataSource, MatTreeFlattener, MAT_DIALOG_DATA } from '@angular/material';
 import { of as ofObservable, Observable, BehaviorSubject } from "rxjs";
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -17,6 +17,9 @@ export class PermissionDashboardComponent implements OnInit {
   dataChange: BehaviorSubject<TodoItemNode[]> = new BehaviorSubject<
     TodoItemNode[]
   >([]);
+  @ViewChild('tree') tree;
+
+
   typeTitle = "Create";
   get data(): TodoItemNode[] {
     return this.dataChange.value;
@@ -92,13 +95,7 @@ export class PermissionDashboardComponent implements OnInit {
       try{
         const pA = JSON.parse(this.dialogueData.formData.PERMISSION_ARRAY);
         setTimeout(()=>{
-          pA.forEach(element => {
-            this.todoItemSelectionEdit({
-              item:element,
-              level:1,
-              expandable:false
-            })
-          });
+          this.checkAll(pA);
           this.isActive = true;
         },100)
       }catch(e){}
@@ -107,6 +104,17 @@ export class PermissionDashboardComponent implements OnInit {
     setTimeout(()=>{
       this.isActive = true;
     },100)
+  }
+  checkAll(array){
+    console.log("datanode",this.treeControl.dataNodes)
+    for (let i = 0; i < this.treeControl.dataNodes.length; i++) {
+      if(!this.checklistSelection.isSelected(this.treeControl.dataNodes[i])){
+        if(array.indexOf(this.treeControl.dataNodes[i].item) !== -1){
+          this.checklistSelection.toggle(this.treeControl.dataNodes[i]);
+        }
+      }
+      this.treeControl.expand(this.treeControl.dataNodes[i])
+    }
   }
   flatNodeMap: Map<TodoItemFlatNode, TodoItemNode> = new Map<
     TodoItemFlatNode,
@@ -187,8 +195,8 @@ export class PermissionDashboardComponent implements OnInit {
 
   }
   todoItemSelectionEdit(node: TodoItemFlatNode): void {
-    // this.checklistSelection.toggle(node);
-    // this.checklistSelection.select(node)
+     this.checklistSelection.toggle(node);
+     this.checklistSelection.select(node)
 
   }
   onPermissionSubmit(formDirective: FormGroupDirective) {
