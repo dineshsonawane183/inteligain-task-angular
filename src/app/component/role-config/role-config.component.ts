@@ -106,6 +106,7 @@ export class AdminDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed');
+      this.getAllPermissions();
     });
   }
   role(from){

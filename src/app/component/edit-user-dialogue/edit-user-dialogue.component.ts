@@ -34,6 +34,7 @@ export class EditUserDialogueComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data);
     this.userForm.patchValue(this.data);
+    this.userForm.get("permission_id").patchValue(this.data.permission_id+"");
     this.getAllRoles();
     this.getAllPermissions();
 
