@@ -22,7 +22,7 @@
             <td>{{usr.first_name + ' ' + usr.last_name}}</td>
             <td>{{usr.user_name}}</td>
             <td>{{usr.role_type}}</td>
-            <td>{{usr.permission_code}}</td>
+            <td>{{getPermissionCode(usr)}}</td>
             <td>
               <button type="button" *ngIf ="role('Edit Users') === 'hasAccess'"  class="btn btn-primary d-inline ml-1 mt-1" (click)="editUser(usr)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

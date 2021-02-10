@@ -12,6 +12,7 @@ export class UserDashboardComponent implements OnInit {
 
   sectionTitle: string = "User Dashboard";
   users = [];
+  permissions =[];
   usrIdForDel = 0;
   @Output()
   userDetailsChanged  = new EventEmitter<any>();
@@ -22,12 +23,28 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit(){
     this.getAllUsers();
+    this.getAllPermissions();
   }
   getAllUsers() {
     this.appService.getAllUsers().subscribe((res: any) => {
       this.users = res.data;
       console.log(this.users)
     });
+  }
+  getAllPermissions() {
+    this.appService.getAllPermission().subscribe((res: any) => {
+      this.permissions = res.data;
+    });
+  }
+  getPermissionCode(code){
+    let retval :any= this.permissions.filter((item)=>{
+      return item.ID == code.permission_id
+    });
+    if(retval && retval.length > 0){
+      return retval[0].PERMISSION_CODE;
+    }else{
+      return code;
+    }
   }
   editUser(usr){
     const dialogRef = this.dialog.open(EditUserDialogueComponent, {

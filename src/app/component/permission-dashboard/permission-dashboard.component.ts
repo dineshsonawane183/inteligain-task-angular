@@ -17,10 +17,11 @@ export class PermissionDashboardComponent implements OnInit {
   dataChange: BehaviorSubject<TodoItemNode[]> = new BehaviorSubject<
     TodoItemNode[]
   >([]);
-
+  typeTitle = "Create";
   get data(): TodoItemNode[] {
     return this.dataChange.value;
   }
+  isActive :boolean= true;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<PermissionDashboardComponent>,
@@ -52,6 +53,7 @@ export class PermissionDashboardComponent implements OnInit {
   permissionForm: FormGroup = this.fb.group({
     permission_code: ["", Validators.required],
     permission_desc: ["", Validators.required],
+    id:[""]
   });
   initialize() {
     const data = this.buildFileTree(TREE_DATA, 0);
@@ -77,6 +79,34 @@ export class PermissionDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.dialogueData && this.dialogueData.type == "edit"){
+      this.isActive = false;
+      this.typeTitle = "Edit";
+
+      console.log("dialogueData",this.dialogueData);
+      let data = {
+        permission_code: this.dialogueData.formData.PERMISSION_CODE,
+        permission_desc: this.dialogueData.formData.PERMISSION_DESC,
+        id: this.dialogueData.formData.ID,
+      }
+      try{
+        const pA = JSON.parse(this.dialogueData.formData.PERMISSION_ARRAY);
+        setTimeout(()=>{
+          pA.forEach(element => {
+            this.todoItemSelectionEdit({
+              item:element,
+              level:1,
+              expandable:false
+            })
+          });
+          this.isActive = true;
+        },100)
+      }catch(e){}
+      this.permissionForm.patchValue(data);
+    }
+    setTimeout(()=>{
+      this.isActive = true;
+    },100)
   }
   flatNodeMap: Map<TodoItemFlatNode, TodoItemNode> = new Map<
     TodoItemFlatNode,
@@ -156,6 +186,11 @@ export class PermissionDashboardComponent implements OnInit {
       : this.checklistSelection.deselect(...descendants);
 
   }
+  todoItemSelectionEdit(node: TodoItemFlatNode): void {
+    // this.checklistSelection.toggle(node);
+    // this.checklistSelection.select(node)
+
+  }
   onPermissionSubmit(formDirective: FormGroupDirective) {
 
     const parentPermissions = ["Employee Management", "User Management", "Admin Management"];
@@ -166,10 +201,14 @@ export class PermissionDashboardComponent implements OnInit {
         finalPermissionArr.push(permission.item);
       }
     })
+   if(this.dialogueData.type == "create"){
     if (this.permissionForm.valid) {
       let params = {
         ...this.permissionForm.value,
         permission_array: finalPermissionArr
+      }
+      if(!params.id){
+        delete params.id
       }
       this.appService.createPermission(params).subscribe((res: any) => {
         this.permissionForm.reset();
@@ -178,6 +217,21 @@ export class PermissionDashboardComponent implements OnInit {
         this.toastr.showSuccess("Permission saved successfully", "Success")
       });
     }
+   }else if(this.dialogueData.type == "edit"){
+    if (this.permissionForm.valid) {
+      let params = {
+        ...this.permissionForm.value,
+        id:this.dialogueData.formData.ID,
+        permission_array: finalPermissionArr
+      }
+      this.appService.editPermission(params).subscribe((res: any) => {
+        this.permissionForm.reset();
+        formDirective.resetForm();
+        this.close();
+        this.toastr.showSuccess("Permission saved successfully", "Success")
+      });
+    }
+   }
   }
 
   close(){
@@ -197,15 +251,15 @@ export class TodoItemFlatNode {
 
 const TREE_DATA = {
   "Employee Management": {
-    "emp_read": "View Employees",
-    "emp_create": "Create Employee",
-    "emp_edit": "Edit Employee",
-    "emp_delete": "Delete Employee"
+    "View Employees": "View Employees",
+    "Create Employee": "Create Employee",
+    "Edit Employee": "Edit Employee",
+    "Delete Employee": "Delete Employee"
   },
   "User Management": {
-    "usr_read": "View Users",
-    "usr_edit": "Edit Users",
-    "usr_delete": "Delete Users"
+    "View Users": "View Users",
+    "Edit Users": "Edit Users",
+    "Delete Users": "Delete Users"
   },
   "Admin Management": {
     "role_view": "View Role",
@@ -214,6 +268,7 @@ const TREE_DATA = {
     "role_delete": "Delete Role",
     "permission_delete": "Delete Permission",
     "permission_create": "Create Permission",
+    "permission_edit": "Edit Permission",
   },
 };
 

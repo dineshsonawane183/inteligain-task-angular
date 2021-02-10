@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild,EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AppService } from 'src/app/service/app.service';
+import { PermissionDashboardComponent } from '../permission-dashboard/permission-dashboard.component';
 import { RoleDialogueComponent } from '../role-dialogue/role-dialogue.component';
 
 @Component({
@@ -36,8 +37,8 @@ export class PermissionDashboardListComponent implements OnInit {
     }catch(e){}
     
   }
-  editUser(role){
-    const dialogRef = this.dialog.open(RoleDialogueComponent, {
+  editPermission(permission){
+    const dialogRef = this.dialog.open(PermissionDashboardComponent, {
       width: '60%',
       height: '88%',
       disableClose: true,
@@ -45,7 +46,7 @@ export class PermissionDashboardListComponent implements OnInit {
         roles : this.roles,
         permissions:this.permissions,
         type:"edit",
-        formData :role
+        formData :permission
       }
     });
 

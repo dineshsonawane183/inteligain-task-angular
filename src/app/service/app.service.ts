@@ -58,6 +58,9 @@ export class AppService {
     createPermission(params = {}){
         return this.http.post(environment.api_url + "api/role/permission", params)
     }
+    editPermission(params = {}){
+        return this.http.patch(environment.api_url + "api/role/permission", params)
+    }
     deleteEmployee(params = {}) {
         const options = {
             headers: new HttpHeaders({
